@@ -1,0 +1,18 @@
+.flip{
+    -webkit-appearance: none;
+    transform: rotateY(180deg);
+  }
+  
+.flip video::-webkit-media-controls{
+    transform: rotateY(180deg) !important;
+}
+
+.container {
+    text-align: center;
+}
+
+.output_canvas {
+    border-width: 3px;
+    border-style: solid;
+    border-color: black;
+}
