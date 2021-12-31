@@ -1,0 +1,47 @@
+$btn-col: #930395;
+$btn-hover: #5c4ca4;
+$background-col: #0f0875;
+$text-col: white;
+
+html, body {
+    color: $text-col;
+    background-color: $background-col;
+}
+
+canvas {
+    border: 2px white solid;
+    background-color: white;
+}
+
+.container {
+    text-align: center;
+}
+
+.flip {
+    transform:scale(-1, 1);
+}
+
+button {
+    padding: 5px 15px;
+    background-color: $btn-col;
+    color: white;
+    margin-bottom: 10px;
+
+    &:hover {
+        background-color: $btn-hover;
+        transform: translate(3px, 3px);
+        box-shadow: 1px 1px white;
+    }
+}
+
+
+footer {
+    position: sticky;
+    bottom: 0px;
+    width: 100%;
+    background-color: black;
+
+    a {
+        color: gray;
+    }
+}

@@ -1,8 +1,10 @@
+console.log(WIDTH, HEIGHT)
+
 function disp_hand(results) {
     canvasCtx.save();
-    canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
     canvasCtx.drawImage(
-        results.image, 0, 0, canvasElement.width, canvasElement.height);
+        results.image, 0, 0, WIDTH, HEIGHT);
 
     if (results.multiHandLandmarks) {
         for (const landmarks of results.multiHandLandmarks) {
@@ -33,9 +35,9 @@ function update_paddle_pos(results, paddle, hand) {
     let all_fingers = get_hand_landmarks(results, hand = hand)
     if (all_fingers) {
         let chosen_finger = all_fingers[8]
-        let x = chosen_finger['x'] * canvasElement.width
-        let y = chosen_finger['y'] * canvasElement.height
-        let z = Math.sqrt(chosen_finger['z']) * canvasElement.width * 0.02
+        let x = chosen_finger['x'] * WIDTH
+        let y = chosen_finger['y'] * HEIGHT
+        let z = Math.sqrt(chosen_finger['z']) * WIDTH * 0.02
 
         paddle.y = y
         prevY = y
@@ -63,7 +65,7 @@ function game_play(results, ball, player1_paddle, player2_paddle) {
     }
 
     // check ball in frame
-    if (ball.y + ball.size > canvasElement.height || ball.y < 0) {
+    if (ball.y + ball.size > HEIGHT || ball.y < 0) {
         ball.yspeed = ball.yspeed * -1
     }
 
@@ -79,7 +81,7 @@ function render_txt(text) {
     canvasCtx.save()
 
     // translate context to center of canvas
-    canvasCtx.translate(canvasElement.width / 2, canvasElement.height / 2);
+    canvasCtx.translate(WIDTH / 2, HEIGHT / 2);
 
     // flip context horizontally
     canvasCtx.scale(-1, 1);
@@ -107,8 +109,8 @@ let prevY
 
 function start_game() {
     ball = new Ball()
-    player1_paddle = new Paddle(canvasElement.width * 1 / 7, "rgb(255, 0, 0)")
-    player2_paddle = new Paddle(canvasElement.width * 6 / 7, "rgb(0, 0, 255)")
+    player1_paddle = new Paddle(WIDTH * 1 / 7, "rgb(255, 0, 0)")
+    player2_paddle = new Paddle(WIDTH * 6 / 7, "rgb(0, 0, 255)")
 
     countdown = true
     firstcountdown = true
@@ -117,13 +119,14 @@ function start_game() {
 }
 
 async function render_game(results) {
-    canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height);
+    canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
 
     if (gameon) {
         document.getElementById('flipper').classList = 'flip'
 
+        console.log(WIDTH, HEIGHT)
         canvasCtx.drawImage(
-            results.image, 0, 0, canvasElement.width, canvasElement.height);
+            results.image, 0, 0, WIDTH, HEIGHT);
 
         ball.render()
         player1_paddle.render()
@@ -150,7 +153,7 @@ async function render_game(results) {
             game_play(results, ball, player1_paddle, player2_paddle)
 
             // check win
-            if (ball.x > canvasElement.width) {
+            if (ball.x > WIDTH) {
                 gameon = false
                 won = 'Player'
             } else if (ball.x < 0) {
@@ -160,7 +163,7 @@ async function render_game(results) {
         }
 
     } else {
-        canvasCtx.clearRect(0, 0, canvasElement.width, canvasElement.height)
+        canvasCtx.clearRect(0, 0, WIDTH, HEIGHT)
 
         if (won) {
             render_txt(`Game Over. ${won} won.`)
@@ -182,13 +185,15 @@ hands.setOptions({
     minDetectionConfidence: 0.5,
     minTrackingConfidence: 0.5
 });
+
 hands.onResults(render_game);
 
 const camera = new Camera(videoElement, {
     onFrame: async () => {
         await hands.send({ image: videoElement });
     },
-    width: 1280,
-    height: 720
+    width: WIDTH,
+    height: HEIGHT
 });
+
 camera.start();

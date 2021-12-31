@@ -1,18 +1,41 @@
-.flip{
-    -webkit-appearance: none;
-    transform: rotateY(180deg);
-  }
-  
-.flip video::-webkit-media-controls{
-    transform: rotateY(180deg) !important;
+html, body {
+  color: white;
+  background-color: #0f0875;
+}
+
+canvas {
+  border: 2px white solid;
+  background-color: white;
 }
 
 .container {
-    text-align: center;
+  text-align: center;
 }
 
-.output_canvas {
-    border-width: 3px;
-    border-style: solid;
-    border-color: black;
+.flip {
+  transform: scale(-1, 1);
 }
+
+button {
+  padding: 5px 15px;
+  background-color: #930395;
+  color: white;
+  margin-bottom: 10px;
+}
+button:hover {
+  background-color: #5c4ca4;
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px white;
+}
+
+footer {
+  position: sticky;
+  bottom: 0px;
+  width: 100%;
+  background-color: black;
+}
+footer a {
+  color: gray;
+}
+
+/*# sourceMappingURL=style.css.map */
